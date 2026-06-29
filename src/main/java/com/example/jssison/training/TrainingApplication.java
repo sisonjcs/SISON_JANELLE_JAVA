@@ -12,11 +12,10 @@ public class TrainingApplication {
 	public static void main(String[] args) {
 		
 		boolean inMenu = true;
+		Scanner scanner = new Scanner(System.in);
 		
 		while (inMenu) {
-			Scanner scanner = new Scanner(System.in);
-			
-			System.out.println("MENU");
+			System.out.println("\nMENU");
 			System.out.println("[1] Blackjack");
 			System.out.println("[2] Day of the Week");
 			System.out.println("[3] Day of the Week - Pyramid Matching");
@@ -31,36 +30,42 @@ public class TrainingApplication {
 			
 			switch (choice) {
 				case "1":
-					System.out.println("BLACKJACK");
+					System.out.println("\nBLACKJACK");
 					
+					System.out.println("Enter first number: ");
 					int a = scanner.nextInt();
-					int b = scanner.nextInt();
-					assignment1.blackjack(a, b);
+					scanner.nextLine();
 					
-					scanner.close();
+					System.out.println("Enter second number: ");
+					int b = scanner.nextInt();
+					scanner.nextLine();
+					int result = assignment1.blackjack(a, b);
+					
+					System.out.println("\nResult: " + result);
+					
 					break;
 				case "2":
-					System.out.println("DAY OF THE WEEK");
+					System.out.println("\nDAY OF THE WEEK");
 					assignment1.printDOTW();
 					break;
 				case "3":
-					System.out.println("DAY OF THE WEEK - PATTERN MATCHING");
+					System.out.println("\nDAY OF THE WEEK - PATTERN MATCHING");
 					assignment1.printDOTW();
 					break;
 				case "4":
-					System.out.println("PYRAMID - FOR LOOP");
+					System.out.println("\nPYRAMID - FOR LOOP");
 					assignment1.pyramidForLoop();
 					break;
 				case "5":
-					System.out.println("PYRAMID - WHILE LOOP");
+					System.out.println("\nPYRAMID - WHILE LOOP");
 					assignment1.pyramidWhileLoop();
 					break;
 				case "6":
-					System.out.println("PYRAMID - DO WHILE LOOP");
+					System.out.println("\nPYRAMID - DO WHILE LOOP");
 					assignment1.pyramidDoWhileLoop();
 					break;
 				case "7":
-					System.out.println("ZIGZAG");
+					System.out.println("\nZIGZAG");
 					zigzag.zigzag();
 					break;
 				case "8":

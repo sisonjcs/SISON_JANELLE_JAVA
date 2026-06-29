@@ -24,7 +24,5 @@ public class Zigzag {
 			System.out.println("\n");
 		}
 		
-		scanner.close();
-		
 	}
 }

@@ -23,7 +23,7 @@ public class Assignment1 {
 			if (a > 21) {
 				return b;
 			}
-			return b;
+			return a;
 		} else {
 			if (b > 21) {
 				return a;
@@ -65,8 +65,6 @@ public class Assignment1 {
 				System.out.println("Invalid day number");
 				break;
 		}
-		
-		scanner.close();
 	}
 	
 	// Switch problem (print day of the week based on the number input)
@@ -88,8 +86,6 @@ public class Assignment1 {
 			default -> System.out.println("Invalid day number");
 			
 		}
-		
-		scanner.close();
 	}
 	
 	void pyramidForLoop() {
@@ -114,7 +110,6 @@ public class Assignment1 {
 			System.out.println();
 		}
 		
-		scanner.close();
 	}
 	
 	void pyramidWhileLoop() {
@@ -142,8 +137,6 @@ public class Assignment1 {
 			System.out.println("");
 			i++;
 		}
-		
-		scanner.close();
 	}
 	
 	void pyramidDoWhileLoop() {
@@ -172,7 +165,5 @@ public class Assignment1 {
 			System.out.println();
 			i++;
 		} while (i <= n);
-		
-		scanner.close();
 	}
 }
