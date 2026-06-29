@@ -1,0 +1,13 @@
+package java;
+
+public class test {
+	int blackjack(int a, int b) {
+		if (a > b) {
+			if (a > 21) {
+				return b;
+			}
+			return 0;
+		}
+		return 0;
+	}
+}

@@ -1,0 +1,25 @@
+package java;
+
+public class Main {
+	static int blackjack(int a, int b) {
+		if (a > b) {
+			if (a >= 21) {
+				return b;
+			}
+			return 0;
+		} else {
+			if (b >= 21) {
+				return a;
+			}
+			return 0;
+		}
+	}
+	
+	public static void main(String[] args) {
+		int a = 10;
+	    int b = 21;
+
+	    System.out.println(blackjack(a, b));
+	}
+	
+}

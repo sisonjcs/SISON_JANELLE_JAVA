@@ -1,0 +1,41 @@
+package java;
+
+import java.util.Scanner;
+
+public class test {
+	static int blackjack(int a, int b) {
+		if (a > 21 && b > 21) {
+		    return 0;
+		}
+		    
+		if (a > b) {
+		    if (a > 21) {
+		        return b;
+		    }
+		    return a;
+		} else {
+		    if (b > 21) {
+		        return a;
+		    }
+		    return b;
+		}
+	}
+	
+	private void zigzag() {
+		Scanner scanner = new Scanner(System.in);
+		
+		int gridSize = scanner.nextInt();
+		
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j ++) {
+				System.out.println(j * i);
+			}
+			System.out.println("\n");
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		zigzag();
+	}
+}
