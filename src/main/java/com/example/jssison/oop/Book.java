@@ -1,4 +1,4 @@
-package com.example.jssison.training;
+package com.example.jssison.oop;
 
 public class Book {
 	private String title;

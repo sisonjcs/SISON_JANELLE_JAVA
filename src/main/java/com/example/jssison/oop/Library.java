@@ -1,4 +1,4 @@
-package com.example.jssison.training;
+package com.example.jssison.oop;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,11 @@ public class Library {
 				book.returnBook();
 			}
 		}
+	}
+	
+	// Getter
+	public ArrayList<Book> getBooks() {
+		return books;
 	}
 	
 }

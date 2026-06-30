@@ -2,6 +2,9 @@ package com.example.jssison.training;
 
 import java.util.Scanner;
 
+import com.example.jssison.oop.Book;
+import com.example.jssison.oop.Library;
+
 //import org.springframework.boot.SpringApplication;
 
 
@@ -42,7 +45,7 @@ public class TrainingApplication {
 				case "2":
 					System.out.println("\nBORROW A BOOK");
 					
-					if (!library.books.isEmpty()) {
+					if (!library.getBooks().isEmpty()) {
 						System.out.println("Enter title: ");
 						
 						title = scanner.nextLine();
@@ -56,7 +59,7 @@ public class TrainingApplication {
 				case "3":
 					System.out.println("\nRETURN A BOOK");
 					
-					if (!library.books.isEmpty()) {
+					if (!library.getBooks().isEmpty()) {
 						System.out.println("Enter title: ");
 						
 						title = scanner.nextLine();
@@ -70,7 +73,7 @@ public class TrainingApplication {
 				case "4":
 					System.out.println("\nSEE ALL BOOKS");
 					
-					if (!library.books.isEmpty()) {
+					if (!library.getBooks().isEmpty()) {
 						library.showAllBooks();						
 					} else {
 						System.out.println("\nNo books to show. Add one!");
