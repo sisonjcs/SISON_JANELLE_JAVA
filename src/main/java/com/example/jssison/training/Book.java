@@ -24,7 +24,7 @@ public class Book {
 	}
 	
 	void getInfo() {
-		System.out.println("Title: " + this.title);
+		System.out.println("\nTitle: " + this.title);
 		System.out.println("Author: " + this.author);
 		System.out.println("Availability: " + (this.available ? "Available" : "Not available"));
 	}

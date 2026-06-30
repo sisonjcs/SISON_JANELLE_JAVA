@@ -17,7 +17,7 @@ public class TrainingApplication {
 		String author;
 		
 		while (!choice.equals(new String("5"))) {
-			System.out.println("MENU");
+			System.out.println("\nMENU");
 			System.out.println("[1] Add a book");
 			System.out.println("[2] Borrow a book");
 			System.out.println("[3] Return a book");
@@ -41,24 +41,41 @@ public class TrainingApplication {
 					break;
 				case "2":
 					System.out.println("\nBORROW A BOOK");
-					System.out.println("Enter title: ");
 					
-					title = scanner.nextLine();
+					if (!library.books.isEmpty()) {
+						System.out.println("Enter title: ");
+						
+						title = scanner.nextLine();
+						
+						library.borrowBook(title);						
+					} else {
+						System.out.println("\nNo books to borrow.");
+					}
 					
-					library.borrowBook(title);
 					break;
 				case "3":
 					System.out.println("\nRETURN A BOOK");
-					System.out.println("Enter title: ");
 					
-					title = scanner.nextLine();
+					if (!library.books.isEmpty()) {
+						System.out.println("Enter title: ");
+						
+						title = scanner.nextLine();
+						
+						library.returnBook(title);						
+					} else {
+						System.out.println("\nNo books to return.");
+					}
 					
-					library.returnBook(title);
 					break;
 				case "4":
 					System.out.println("\nSEE ALL BOOKS");
 					
-					library.showAllBooks();
+					if (!library.books.isEmpty()) {
+						library.showAllBooks();						
+					} else {
+						System.out.println("\nNo books to show. Add one!");
+					}
+					
 					break;
 				case "5":
 					System.out.println("\nExiting");
