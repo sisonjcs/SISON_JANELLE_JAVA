@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 //import org.springframework.boot.SpringApplication;
 
+
 //@SpringBootApplication
 public class TrainingApplication {
-	static Library library = new Library();
-	
 	public static void main(String[] args) {
+		Library library = new Library();
 		
 		Scanner scanner = new Scanner(System.in);
 		
@@ -16,7 +16,7 @@ public class TrainingApplication {
 		String title;
 		String author;
 		
-		while (choice.equals(new String("5"))) {
+		while (!choice.equals(new String("5"))) {
 			System.out.println("MENU");
 			System.out.println("[1] Add a book");
 			System.out.println("[2] Borrow a book");
