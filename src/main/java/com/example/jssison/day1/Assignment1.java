@@ -1,4 +1,4 @@
-package com.example.jssison.training;
+package com.example.jssison.day1;
 
 import java.util.*;
 
