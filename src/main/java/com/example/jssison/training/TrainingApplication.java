@@ -6,77 +6,69 @@ import java.util.Scanner;
 
 //@SpringBootApplication
 public class TrainingApplication {
-	static Zigzag zigzag = new Zigzag();
-	static Assignment1 assignment1 = new Assignment1();
+	static Library library = new Library();
 	
 	public static void main(String[] args) {
 		
-		boolean inMenu = true;
 		Scanner scanner = new Scanner(System.in);
 		
-		while (inMenu) {
-			System.out.println("\nMENU");
-			System.out.println("[1] Blackjack");
-			System.out.println("[2] Day of the Week");
-			System.out.println("[3] Day of the Week - Pyramid Matching");
-			System.out.println("[4] Pyramid - For Loop");
-			System.out.println("[5] Pyramid - While Loop");
-			System.out.println("[6] Pyramid -  Loop");
-			System.out.println("[7] Zigzag");
-			System.out.println("[8] Exit");
-			
+		String choice = "";
+		String title;
+		String author;
+		
+		while (choice.equals(new String("5"))) {
+			System.out.println("MENU");
+			System.out.println("[1] Add a book");
+			System.out.println("[2] Borrow a book");
+			System.out.println("[3] Return a book");
+			System.out.println("[4] See all books");
+			System.out.println("[5] Exit");
 			System.out.println("Enter choice: ");
-			String choice = scanner.nextLine();
+			
+			choice = scanner.nextLine();
 			
 			switch (choice) {
 				case "1":
-					System.out.println("\nBLACKJACK");
+					System.out.println("\nADD A BOOK");
+					System.out.println("Enter title: ");
 					
-					System.out.println("Enter first number: ");
-					int a = scanner.nextInt();
-					scanner.nextLine();
+					title = scanner.nextLine();
 					
-					System.out.println("Enter second number: ");
-					int b = scanner.nextInt();
-					scanner.nextLine();
-					int result = assignment1.blackjack(a, b);
+					System.out.println("Enter author: ");
+					author = scanner.nextLine();
 					
-					System.out.println("\nResult: " + result);
-					
+					library.addBook(new Book(title, author));
 					break;
 				case "2":
-					System.out.println("\nDAY OF THE WEEK");
-					assignment1.printDOTW();
+					System.out.println("\nBORROW A BOOK");
+					System.out.println("Enter title: ");
+					
+					title = scanner.nextLine();
+					
+					library.borrowBook(title);
 					break;
 				case "3":
-					System.out.println("\nDAY OF THE WEEK - PATTERN MATCHING");
-					assignment1.printDOTW();
+					System.out.println("\nRETURN A BOOK");
+					System.out.println("Enter title: ");
+					
+					title = scanner.nextLine();
+					
+					library.returnBook(title);
 					break;
 				case "4":
-					System.out.println("\nPYRAMID - FOR LOOP");
-					assignment1.pyramidForLoop();
+					System.out.println("\nSEE ALL BOOKS");
+					
+					library.showAllBooks();
 					break;
 				case "5":
-					System.out.println("\nPYRAMID - WHILE LOOP");
-					assignment1.pyramidWhileLoop();
-					break;
-				case "6":
-					System.out.println("\nPYRAMID - DO WHILE LOOP");
-					assignment1.pyramidDoWhileLoop();
-					break;
-				case "7":
-					System.out.println("\nZIGZAG");
-					zigzag.zigzag();
-					break;
-				case "8":
-					inMenu = false;
-					System.out.println("Exiting...");
+					System.out.println("\nExiting");
 					break;
 				default:
-					System.out.println("Invalid choice");
+					System.out.println("\nInvalid choice. Try again.");
 					break;
 			}
-				
 		}
+		
+		scanner.close();
 	}
 }
