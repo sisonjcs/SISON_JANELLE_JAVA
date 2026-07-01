@@ -1,4 +1,4 @@
-package com.example.jssison.payment;
+package com.example.jssison.day3;
 
 public non-sealed class BankTransfer extends BaseProcessor{
 	public BankTransfer(String id) {

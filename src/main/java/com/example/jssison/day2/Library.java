@@ -1,4 +1,4 @@
-package com.example.jssison.oop;
+package com.example.jssison.day2;
 
 import java.util.ArrayList;
 

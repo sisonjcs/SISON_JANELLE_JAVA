@@ -1,4 +1,4 @@
-package com.example.jssison.payment;
+package com.example.jssison.day3;
 
 public abstract sealed class BaseProcessor implements PaymentMethod permits ElectronicPayment, BankTransfer{
 	private final String id;

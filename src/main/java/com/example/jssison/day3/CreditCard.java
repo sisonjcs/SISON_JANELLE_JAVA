@@ -1,4 +1,4 @@
-package com.example.jssison.payment;
+package com.example.jssison.day3;
 
 public final class CreditCard extends ElectronicPayment {
 
@@ -9,7 +9,7 @@ public final class CreditCard extends ElectronicPayment {
 	
 	@Override
 	public void process() {
-		System.out.println(getId() + " processed via Creidt Card.");
+		System.out.println(getId() + " processed via Credit Card.");
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.example.jssison.payment;
+package com.example.jssison.day3;
 
 public final class PayPal extends ElectronicPayment {
 
