@@ -25,9 +25,7 @@ public class Main {
 	
         Set<String> uniqueEmployees = new HashSet<>();
         for (Employee emp : employees) {
-        	if (!uniqueEmployees.contains(emp.getName())) {
-        		uniqueEmployees.add(emp.getName());
-        	}
+        	uniqueEmployees.add(emp.getName());
         }
         
         // Print unique employees
