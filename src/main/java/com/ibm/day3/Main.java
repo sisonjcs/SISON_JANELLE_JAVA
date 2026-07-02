@@ -1,4 +1,4 @@
-package com.example.jssison.day3;
+package com.ibm.day3;
 
 import java.util.ArrayList;
 import java.util.List;

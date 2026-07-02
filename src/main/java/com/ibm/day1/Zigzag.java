@@ -1,4 +1,4 @@
-package com.example.jssison.day1;
+package com.ibm.day1;
 
 import java.util.Scanner;
 

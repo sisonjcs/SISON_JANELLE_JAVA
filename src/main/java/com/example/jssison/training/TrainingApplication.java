@@ -2,8 +2,8 @@ package com.example.jssison.training;
 
 import java.util.Scanner;
 
-import com.example.jssison.day2.Book;
-import com.example.jssison.day2.Library;
+import com.ibm.day2.Book;
+import com.ibm.day2.Library;
 
 //import org.springframework.boot.SpringApplication;
 

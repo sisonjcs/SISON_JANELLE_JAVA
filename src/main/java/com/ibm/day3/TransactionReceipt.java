@@ -1,4 +1,4 @@
-package com.example.jssison.day3;
+package com.ibm.day3;
 
 public record TransactionReceipt(String id, String product, int qty, double amount, String paymentMethod) {
 

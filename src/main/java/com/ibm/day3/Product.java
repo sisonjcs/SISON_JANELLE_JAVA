@@ -1,4 +1,4 @@
-package com.example.jssison.day3;
+package com.ibm.day3;
 
 public class Product {
 	private String name;
