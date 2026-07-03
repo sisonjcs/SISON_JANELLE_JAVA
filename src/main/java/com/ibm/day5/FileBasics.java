@@ -48,10 +48,8 @@ public class FileBasics {
 			bw.write("]");
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("ERROR: File not found. " + e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("ERROR: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
