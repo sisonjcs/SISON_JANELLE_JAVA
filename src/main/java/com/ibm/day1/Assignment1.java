@@ -63,7 +63,6 @@ public class Assignment1 {
 				break;
 			default:
 				System.out.println("Invalid day number");
-				break;
 		}
 	}
 	
