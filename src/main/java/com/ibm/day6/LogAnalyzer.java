@@ -14,7 +14,7 @@ class MalformedLogEntryException extends Exception {
 public class LogAnalyzer {
 
     public static void main(String[] args) {
-//        String filename = "server.log";
+//        String filename = "resources/server.log";
     	String filename = args[0];
         Map<String, Integer> levelCount = new HashMap<>();
         levelCount.put("INFO", 0);
