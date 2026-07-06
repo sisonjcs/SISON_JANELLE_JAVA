@@ -6,8 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,8 +37,13 @@ class LogAnalyzerTest {
     	}
     }
     
+    @Test
+    void coverConstructor() {
+    	new LogAnalyzer();
+    }
+    
 	@Test
-	@Disabled
+//	@Disabled
 	//Normal
 	void exec001() throws IOException {
 		String expectedFile = Files.readString(Path.of(FILE_DIR.concat("exec001/summary.txt")));
@@ -52,7 +59,7 @@ class LogAnalyzerTest {
 	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	//Log file not found
 	void exec002() throws IOException {
 		LogAnalyzer.main(new String[] {"nofile.txt"});
@@ -62,7 +69,7 @@ class LogAnalyzerTest {
 	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	// IOException (broken)
 	void exec003() throws IOException {
 		String logFile = FILE_DIR.concat("exec003/server.log");
@@ -77,7 +84,7 @@ class LogAnalyzerTest {
 	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	// missing timestamp brackets
 	void exec004() throws IOException {
 		String logFile = FILE_DIR.concat("exec004/server.log");
@@ -102,7 +109,7 @@ class LogAnalyzerTest {
 	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	// invalid log level
 	// should throw
 	void exec005() throws IOException {
@@ -118,7 +125,7 @@ class LogAnalyzerTest {
 	}
 	
 	@Test
-	@Disabled
+//	@Disabled
 	void exec006() throws IOException {
 		String logFile = FILE_DIR.concat("exec006/server.log");
 		String expectedFile = Files.readString(Path.of(FILE_DIR.concat("exec006/summary.txt")));
@@ -132,14 +139,13 @@ class LogAnalyzerTest {
 	}
 
 	@Test
-	@Disabled
-	void exec007() {
-		String logFile = FILE_DIR.concat("exec007/server.log");
+	void exec007() throws IOException {
+		Path logPath = Path.of(FILE_DIR.concat("exec007/server.log"));
 		
-		File log = new File(FILE_DIR.concat("exec007/server.log"));
-		log.setReadable(false);
+		FileChannel.open(logPath, StandardOpenOption.READ, StandardOpenOption.WRITE).lock();
 		
-		LogAnalyzer.main(new String[] {log.toPath().toString()});
+		LogAnalyzer.main(new String[] {logPath.toString()});
+
 		String expectedOutput = "Error reading file." + System.lineSeparator();
 		assertEquals(expectedOutput, outputStream.toString());
 	}
