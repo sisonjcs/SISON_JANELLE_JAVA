@@ -15,11 +15,17 @@ import java.util.Map;
 
 public class LogFileAnalyzer {
 	
+	String logFile;
+	
+	public LogFileAnalyzer(String file) {
+		logFile = file;
+	}
+	
 	public static void main(String[] args) {
 		DateTimeFormatter timestampFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		
+		String logFile = args[0];
 		try (
-			BufferedReader br = new BufferedReader(new FileReader("server.log"));
+			BufferedReader br = new BufferedReader(new FileReader(logFile));
 			BufferedWriter bw = new BufferedWriter(new FileWriter("summary.txt"));
 		) {
 			// Initialize variables
