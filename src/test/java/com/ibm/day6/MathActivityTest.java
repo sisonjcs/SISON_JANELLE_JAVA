@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class MathActivityTest {
 	/**
+	 * Normal
 	 * Testing MathActivity.add() given two floating values (a and b)
 	 * Expected to return correct sum value
 	 */
@@ -16,6 +17,7 @@ class MathActivityTest {
 	}
 	
 	/**
+	 * Normal
 	 * Testing MathActivity.subtract() given two floating values (a and b)
 	 * Expected to return correct difference value
 	 */
@@ -27,6 +29,7 @@ class MathActivityTest {
 	}
 	
 	/**
+	 * Normal
 	 * Testing MathActivity.multiply() given two floating values (a and b)
 	 * Expected to return correct product value
 	 */
@@ -38,6 +41,7 @@ class MathActivityTest {
 	}
 	
 	/**
+	 * Normal
 	 * Testing MathActivity.divide() given two floating values (a and b)
 	 * Expected to return correct quotient value
 	 */
@@ -49,6 +53,7 @@ class MathActivityTest {
 	}
 	
 	/**
+	 * Abnormal
 	 * Testing MathActivity.divide() given two floating values (a and b) wherein b is equal to 0
 	 * Expected to throw an ArithmeticException
 	 */
