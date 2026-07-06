@@ -5,7 +5,7 @@ INFO: 68
 WARN: 10
 ERROR: 9
 
-Error messages:
+Error Messages:
 - Failed to connect to external API
 - NullPointerException in UserService.java line 87
 - Timeout while reading data from database
@@ -16,5 +16,5 @@ Error messages:
 - SMTP server not responding
 - Audit log write failure
 
-Earliest timestamp: 2024-05-10 09:00:00
-Latest timestamp: 2024-05-10 09:04:18
+Earliest Timestamp: 2024-05-10T09:00
+Latest Timestamp: 2024-05-10T09:04:18

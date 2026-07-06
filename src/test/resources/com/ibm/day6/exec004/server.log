@@ -1,0 +1,7 @@
+2024-05-10 09:00:00] INFO: Server started successfully
+[2024-05-10 09:00:03 INFO: Configuration file loaded
+2024-05-10 09:00:06 INFO: Database connection established
+[2024-05-10 09:00:09] INFO: Listening on port 8080
+[2024-05-10 09:00:08] INFO: User 'admin' logged in
+[2024-05-10 09:00:20] WARN: High memory usage detected (75%)
+[2024-05-10 09:00:18] INFO: Scheduled backup started
