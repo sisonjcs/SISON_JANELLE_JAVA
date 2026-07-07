@@ -9,27 +9,29 @@ import java.util.Scanner;
 
 public class Main {
 	
-	private final static String ADD= "INSERT INTO student (email, password, firstname, lastname) VALUES (?, ?, ?, ?)";
-	private final static String VIEW_BY_STUDENTID = "SELECT * FROM student WHERE studentid = ?";
-	private final static String VIEW_BY_EMAIL = "SELECT * FROM student WHERE email = ?";
-	private final static String VIEW_BY_FIRSTNAME = "SELECT * FROM student WHERE firstname = ?";
-	private final static String VIEW_BY_LASTNAME = "SELECT * FROM student WHERE lastname = ?";
-	private final static String UPDATE_PASSWORD = "UPDATE student SET password = ? WHERE email = ?";
+	// SQL queries
+	private final static String ADD = "INSERT INTO student (email, password, firstname, lastname) VALUES (?, ?, ?, ?)";
+	private final static String VIEW = "SELECT studentid, email, firstname, lastname FROM student WHERE studentid = ? OR email LIKE ? OR firstname LIKE ? OR lastname LIKE ?";
+	private final static String UPDATE_PASSWORD = "UPDATE student SET password = ?, dateupdated = LOCALTIMESTAMP WHERE email = ?";
 	private final static String DELETE = "DELETE FROM student WHERE email = ? AND password = ?";
-	private final static String CHECK_EMAIL = "SELECT * FROM student WHERE email = ?";
-	private final static String CHECK_PASSWORD = "SELECT * FROM student WHERE email = ? AND password = ?";
+	private final static String CHECK_EMAIL = "SELECT 1 FROM student WHERE email = ?";
+	private final static String CHECK_PASSWORD = "SELECT 1 FROM student WHERE email = ? AND password = ?";
 	
+	// Scanner
 	static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) throws SQLException {
+		// Database credentials
 		String url = "jdbc:postgresql://localhost:5432/postgres";
 		String uname = "postgres";
 		String password = "pw123";
 		
+		// Connect to database
 		Connection con = DriverManager.getConnection(url, uname, password);
-		
+		// Menu choice
 		String choice = "";
 		
+		// Menu loop
 		while (!choice.equals("Q")) {
 			System.out.println("\n=== MENU ===");
 			System.out.println("[A]dd");
@@ -41,7 +43,7 @@ public class Main {
 			System.out.print("Enter choice: ");
 			choice = scanner.nextLine();
 			
-			switch (choice.toUpperCase()) {
+			switch (choice.toUpperCase().trim()) {
 				case "A" -> addStudent(con);
 				case "V" -> viewStudent(con);
 				case "U" -> updatePassword(con);
@@ -56,13 +58,24 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Helper function
+	 * 
+	 * For checking if an email already exists in the database.
+	 * 
+	 * @param email
+	 * @param con
+	 * @return true if email exists; else false
+	 */
 	static boolean emailExists(String email, Connection con) {
 		try {
+			// Execute query
 			PreparedStatement ps = con.prepareStatement(CHECK_EMAIL);
 			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 			
-			if (rs.next() && rs.getString("email").equals(email)) {
+			// Check if a result is found
+			if (rs.next()) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -71,14 +84,26 @@ public class Main {
 		return false;
 	}
 	
+	/**
+	 * Helper function
+	 * 
+	 * For checking if a given email and password combination exists
+	 * 
+	 * @param email
+	 * @param password
+	 * @param con
+	 * @return true if email and password combination exists; else false
+	 */
 	static boolean passwordMatches(String email, String password, Connection con) {
 		try {
+			// Execute query
 			PreparedStatement ps = con.prepareStatement(CHECK_PASSWORD);
 			ps.setString(1, email);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			
-			if (rs.next() && rs.getString("password").equals(password)) {
+			// Check if a result is found
+			if (rs.next()) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -87,34 +112,45 @@ public class Main {
 		return false;
 	}
 	
+	/**
+	 * Adds a student to the database
+	 * 
+	 * @param con
+	 */
 	static void addStudent(Connection con) {
 		String email, password, confirmPassword, firstname, lastname;
 		
+		// Ask for email
 		System.out.println("\n=== ADD ===");
 		System.out.print("Enter Email: ");
 		email = scanner.nextLine();
 		
-		if (emailExists(email, con)) {
+		// Check if email exists in db
+		if (emailExists(email.trim(), con)) {
 			System.out.println("\nERROR: Email already exists.");
 			return;
 		}
 		
+		// Ask for password and confirm password
 		System.out.print("Enter Password: ");
-		password = scanner.nextLine();
+		password = scanner.nextLine().trim();
 		System.out.print("Confirm Password: ");
-		confirmPassword = scanner.nextLine();
+		confirmPassword = scanner.nextLine().trim();
 		
+		// Check if passwords match
 		if (!password.equals(confirmPassword)) {
 			System.out.println("\nERROR: Passwords do not match.");
 			return;
 		}
 		
+		// Enter other details
 		System.out.print("Enter First name: ");
-		firstname = scanner.nextLine();
+		firstname = scanner.nextLine().trim();
 		System.out.print("Enter Last name: ");
-		lastname = scanner.nextLine();
+		lastname = scanner.nextLine().trim();
 		
 		try {
+			// Insert student
 			PreparedStatement ps = con.prepareStatement(ADD);
 			ps.setString(1, email);
 			ps.setString(2, password);
@@ -129,37 +165,49 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Updates the existing password of a user to a new password
+	 * 
+	 * @param con
+	 */
 	static void updatePassword(Connection con) {
-		String email, oldPassword, newPassword, confirmNewPassword;
+		String email, currentPassword, newPassword, confirmNewPassword;
 		
+		// Ask for email
 		System.out.println("\n=== UPDATE PASSWORD ===");
 		System.out.print("Enter email: ");
-		email = scanner.nextLine();
+		email = scanner.nextLine().trim();
 		
+		// Check if email exists in db
 		if (!emailExists(email, con)) {
 			System.out.println("\nERROR: Email does not exist.");
 			return;
 		}
 		
-		System.out.print("Enter old password: ");
-		oldPassword = scanner.nextLine();
+		// Ask for old password
+		System.out.print("Enter current password: ");
+		currentPassword = scanner.nextLine().trim();
 		
-		if (!passwordMatches(email, oldPassword, con)) {
+		// Check if email and password matches in db
+		if (!passwordMatches(email, currentPassword, con)) {
 			System.out.println("\nERROR: Password does not match existing record.");
 			return;
 		}
 		
+		// Ask for new password and confirmation
 		System.out.print("Enter new password: ");
-		newPassword = scanner.nextLine();
+		newPassword = scanner.nextLine().trim();
 		System.out.print("Confirm new password: ");
-		confirmNewPassword = scanner.nextLine();
+		confirmNewPassword = scanner.nextLine().trim();
 		
+		// Check if password matches
 		if (!newPassword.equals(confirmNewPassword)) {
 			System.out.println("\nERROR: New passwords do not match.");
 			return;
 		}
 		
 		try {
+			// Update password
 			PreparedStatement ps = con.prepareStatement(UPDATE_PASSWORD);	
 			ps.setString(1, newPassword);
 			ps.setString(2, email);
@@ -172,35 +220,46 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Deletes a student from the database
+	 * 
+	 * @param con
+	 */
 	static void deleteStudent(Connection con) {
 		String email, password, confirmPassword;
 		
+		// Ask for email
 		System.out.println("\n=== DELETE ===");
 		System.out.print("Enter email: ");
-		email = scanner.nextLine();
+		email = scanner.nextLine().trim();
 		
+		// Checks if email exists in db
 		if (!emailExists(email, con)) {
 			System.out.println("\nERROR: Email does not exist.");
 			return;
 		}
 		
+		// Ask for password
 		System.out.print("Enter password: ");
-		password = scanner.nextLine();
+		password = scanner.nextLine().trim();
 		
+		// Check if email and password combination exists in db
 		if (!passwordMatches(email, password, con)) {
 			System.out.println("\nERROR: Password does not match existing record.");
 			return;
 		}
 		
 		System.out.print("Confirm password: ");
-		confirmPassword = scanner.nextLine();
+		confirmPassword = scanner.nextLine().trim();
 		
+		// Check if passwords match
 		if (!password.equals(confirmPassword)) {
 			System.out.println("\nERROR: Passwords do not match.");
 			return;
 		}
 		
 		try {
+			// Delete student from db
 			PreparedStatement ps = con.prepareStatement(DELETE);	
 			ps.setString(1, email);
 			ps.setString(2, password);
@@ -213,6 +272,13 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Helper function
+	 * 
+	 * For printing student details
+	 * 
+	 * @param s
+	 */
 	static void printDetails(ResultSet s) {
 		
 		try {
@@ -231,122 +297,58 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Displays the selected student's information
+	 * 
+	 * @param con
+	 */
 	static void viewStudent(Connection con) {
-		String id, email, firstName, lastName, choice = "";
+		String queryString;
 		PreparedStatement ps;
 		ResultSet rs;
 		
-		System.out.println("\n=== VIEW ===");
-		System.out.println("[1] Find by Student ID");
-		System.out.println("[2] Find by Email");
-		System.out.println("[3] Find by First name");
-		System.out.println("[4] Find by Last name");
-		System.out.println("[0] Back");
-		System.out.print("Enter choice: ");
-		choice = scanner.nextLine();
+		// Ask for a filter string
+		System.out.print("Enter queryString (id/email/first name/last name): ");
+		queryString = scanner.nextLine().trim();
 		
-		switch (choice) {
-			case "1" -> {
-				System.out.print("Enter student ID: ");
-				id = scanner.nextLine();
-				try {
-					ps = con.prepareStatement(VIEW_BY_STUDENTID);
-					ps.setInt(1, Integer.parseInt(id));
-					
-					rs = ps.executeQuery();
-					if (rs.next()) {
-						System.out.println("\n=== RESULTS ===");
-						printDetails(rs);						
-					} else {
-						System.out.println("\nINFO: No student found");
-					}
-					
-				} catch (SQLException e) {
-					System.out.println("\nERROR: " + e.getMessage());
-				}
-			}
-			case "2" -> {
-				System.out.print("Enter email: ");
-				email = scanner.nextLine();
-				try {
-					ps = con.prepareStatement(VIEW_BY_EMAIL);
-					ps.setString(1, email);
-					
-					rs = ps.executeQuery();
-					if (rs.next()) {
-						System.out.println("\n=== RESULTS ===");
-						printDetails(rs);						
-					} else {
-						System.out.println("\nINFO: No student found");
-					}
-				} catch (SQLException e) {
-					System.out.println("\nERROR: " + e.getMessage());
-				}
-				
-			}
-			case "3" -> {
-				System.out.print("Enter first name: ");
-				firstName = scanner.nextLine();
-				boolean hasResults = false, isFirst = true;
-				try {
-					ps = con.prepareStatement(VIEW_BY_FIRSTNAME);
-					ps.setString(1, firstName);
-					
-					rs = ps.executeQuery();
-					
-					
-					while (rs.next()) {
-						if (isFirst) {
-							System.out.print("\n=== RESULTS ===");
-							isFirst = false;
-						}
-						printDetails(rs);
-						hasResults = true;
-					}
-					
-					if (!hasResults) {
-						System.out.println("\nINFO: No student/s found");
-					}
-					
-				} catch (SQLException e) {
-					System.out.println("\nERROR: " + e.getMessage());
-				}
-				
-			}
-			case "4" -> {
-				System.out.print("Enter last name: ");
-				lastName = scanner.nextLine();
-				boolean hasResults = false, isFirst = true;
-				
-				try {
-					ps = con.prepareStatement(VIEW_BY_LASTNAME);
-					ps.setString(1, lastName);
-					
-					rs = ps.executeQuery();
-					
-					while (rs.next()) {
-						if (isFirst) {
-							System.out.print("\n=== RESULTS ===");
-							isFirst = false;
-						}
-						printDetails(rs);
-						hasResults = true;
-					}
-					
-					if (!hasResults) {
-						System.out.println("\nINFO: No student/s found");
-					}
-					
-				} catch (SQLException e) {
-					System.out.println("\nERROR: " + e.getMessage());
-				}
-				
-			}
-			case "0" -> {
-				return;
-			}
-			default -> System.out.println("\nERROR: Invalid choice.");
+		/**
+		 * hasResults : flag for checking if there is a result returned by the query
+		 * isFirst    : flag for determining if the current iteration is the first one
+		 */
+		boolean hasResults = false, isFirst = true;
+		try {
+			ps = con.prepareStatement(VIEW);
 			
+			// Search variables
+			try {
+				ps.setInt(1, Integer.parseInt(queryString));
+			} catch (Exception e) {
+				// Fallback
+				ps.setInt(1, -1);
+			}
+			
+			ps.setString(2, '%' + queryString + '%');
+			ps.setString(3, '%' + queryString + '%');
+			ps.setString(4, '%' + queryString + '%');
+			
+			rs = ps.executeQuery();
+			
+			// Loop until there are no more results
+			while (rs.next()) {
+				if (isFirst) {
+					System.out.print("\n=== RESULTS ===");
+					isFirst = false;
+				}
+				printDetails(rs);
+				hasResults = true;
+			}
+			
+			if (!hasResults) {
+				System.out.println("\nINFO: No student/s found");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("\nERROR: " + e.getMessage());
 		}
 		
 	}
