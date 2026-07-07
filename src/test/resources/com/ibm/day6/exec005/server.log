@@ -1,1 +1,5 @@
 [2024-05-10 09:00:00] INFORMATION: Server started successfully
+[2024-05-10 09:00:03] TEST: Configuration file loaded
+[2024-05-10 09:00:06] info: Database connection established
+[2024-05-10 09:00:09] NOMATCH: Listening on port 8080
+[2024-05-10 09:00:12] : User 'admin' logged in

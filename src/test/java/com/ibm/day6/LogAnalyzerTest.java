@@ -33,16 +33,8 @@ class LogAnalyzerTest {
     	System.setOut(originalOut);
     	File summary = new File("resources/summary.txt");
     	if (summary.exists()) {
-    		summary.setWritable(true);
+    		summary.delete();
     	}
-    }
-    
-    /**
-     * Test for covering the constructor
-     */
-    @Test
-    void coverConstructor() {
-    	new LogAnalyzer();
     }
     
 	@Test
@@ -112,6 +104,10 @@ class LogAnalyzerTest {
 		
 		// summary.txt file to write
 		File summary = new File("resources/summary.txt");
+		
+		// Creates new summary file before locking to read-only
+		summary.createNewFile();
+		
 		// Set summary.txt to read-only
 		summary.setReadOnly();
 		
@@ -200,6 +196,14 @@ class LogAnalyzerTest {
 		String expectedOutput = 
 				"Skipping malformed line: [2024-05-10 09:00:00] INFORMATION: Server started successfully" 
 				+ System.lineSeparator() 
+				+ "Skipping malformed line: [2024-05-10 09:00:03] TEST: Configuration file loaded" 
+				+ System.lineSeparator()
+				+ "Skipping malformed line: [2024-05-10 09:00:06] info: Database connection established" 
+				+ System.lineSeparator()
+				+ "Skipping malformed line: [2024-05-10 09:00:09] NOMATCH: Listening on port 8080" 
+				+ System.lineSeparator()
+				+ "Skipping malformed line: [2024-05-10 09:00:12] : User 'admin' logged in" 
+				+ System.lineSeparator()
 				+ "Analysis complete. Summary written to summary.txt" 
 				+ System.lineSeparator();
 		
@@ -269,4 +273,12 @@ class LogAnalyzerTest {
 			Files.readString(Path.of(FILE_DIR.concat("resources/summary.txt")));
 		});
 	}
+	
+	/**
+     * Test for covering the constructor
+     */
+    @Test
+    void exec008() {
+    	new LogAnalyzer();
+    }
 }
